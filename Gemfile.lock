@@ -1,7 +1,16 @@
-GEM
+PATH
+  remote: .
   specs:
+    festivals_lab (0.0.1)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    rake (10.0.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  festivals_lab!
+  rake (>= 0.9)
