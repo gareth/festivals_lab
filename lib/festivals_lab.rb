@@ -39,6 +39,10 @@ class FestivalsLab
     FestivalsLab.request access_key, secret_token, '/events', params
   end
 
+  def event uuid
+    FestivalsLab.request access_key, secret_token, "/event/#{uuid}"
+  end
+
   class << self
     def request access_key, secret_token, endpoint, params = {}
       uri = FestivalsLab.signed_uri access_key, secret_token, endpoint, params

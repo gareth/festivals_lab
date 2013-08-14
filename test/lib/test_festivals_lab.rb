@@ -84,6 +84,26 @@ describe FestivalsLab do
     end
   end
 
+  describe "#event" do
+    it "requests the event from the API" do
+      stub = stub_http_request(:get, %r{//api\.festivalslab\.com/event/00000000000000000000000000000000deadbeef})
+        .to_return(@successful_response)
+
+      response = @api.event '00000000000000000000000000000000deadbeef'
+
+      assert_requested(stub)
+    end
+
+    it "returns the parsed event" do
+      stub = stub_http_request(:get, %r{//api\.festivalslab\.com/event/00000000000000000000000000000000deadbeef})
+        .to_return(@successful_response)
+
+      response = @api.event '00000000000000000000000000000000deadbeef'
+
+      assert_equal [{}], response
+    end
+  end
+
   describe "request" do
     before do
       @uri = "http://api.festivalslab.com/events?key=123&signature=742969faae86a4ba4223c7d93d05ead4b1397c23"
