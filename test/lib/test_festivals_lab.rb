@@ -21,13 +21,13 @@ describe FestivalsLab do
     it "sets an access token" do
       api = FestivalsLab.new "123", nil
 
-      api.access_token.must_equal "123"
+      api.access_key.must_equal "123"
     end
 
     it "sets an access key" do
       api = FestivalsLab.new nil, "456"
 
-      api.access_key.must_equal "456"
+      api.secret_token.must_equal "456"
     end
   end
 
@@ -84,7 +84,7 @@ describe FestivalsLab do
     end
   end
 
-  describe "#request" do
+  describe "request" do
     before do
       @uri = "http://api.festivalslab.com/events?key=123&signature=742969faae86a4ba4223c7d93d05ead4b1397c23"
     end
@@ -92,7 +92,7 @@ describe FestivalsLab do
     it "makes a request to the signed endpoint URI" do
       stub_request(:get, @uri).to_return(@successful_response)
 
-      @api.request '/events'
+      FestivalsLab.request @api.access_key, @api.secret_token, '/events'
 
       assert_requested(:get, @uri)
     end
@@ -101,7 +101,7 @@ describe FestivalsLab do
       stub = stub_http_request(:get, @uri)
         .to_return(@successful_response)
 
-      response = @api.request '/events'
+      response = FestivalsLab.request @api.access_key, @api.secret_token, '/events'
 
       assert_equal [{}], response
     end
@@ -110,32 +110,32 @@ describe FestivalsLab do
       stub = stub_http_request(:get, @uri)
         .to_return(@failed_response)
 
-      lambda { @api.request '/events' }.must_raise(FestivalsLab::ApiError)
+      lambda { FestivalsLab.request @api.access_key, @api.secret_token, '/events' }.must_raise(FestivalsLab::ApiError)
     end
   end
 
-  describe "#signed_uri" do
+  describe "signed_uri" do
     it "requires an access key to be set" do
-      @api.access_key = nil
-      lambda { @api.signed_uri('/events') }.must_raise(FestivalsLab::Error, "Missing API access key")
+      @api.secret_token = nil
+      lambda { FestivalsLab.signed_uri(@api.access_key, @api.secret_token, '/events') }.must_raise(FestivalsLab::Error, "Missing API access key")
     end
 
     it "requires an access token to be set" do
-      @api.access_token = nil
-      lambda { @api.signed_uri('/events') }.must_raise(FestivalsLab::Error, "Missing API access token")
+      @api.access_key = nil
+      lambda { FestivalsLab.signed_uri(@api.access_key, @api.secret_token, '/events') }.must_raise(FestivalsLab::Error, "Missing API access token")
     end
 
     it "appends the correct signature to the request URI" do
-      uri = @api.signed_uri('/events', {:key => 123})
+      uri = FestivalsLab.signed_uri(@api.access_key, @api.secret_token, '/events', {:key => 123})
       uri.must_be_kind_of(URI)
       uri.to_s.must_equal 'http://api.festivalslab.com/events?key=123&signature=742969faae86a4ba4223c7d93d05ead4b1397c23'
     end
   end
 
-  describe "#signature" do
+  describe "signature" do
     it "calculates the HMAC-SHA1 signature based on the access key" do
       ## Because `OpenSSL#HMAC.hexdigest('sha1', '456', '/events?key=123')` # => '742969faae86a4ba4223c7d93d05ead4b1397c23'
-      @api.signature('/events?key=123').must_equal '742969faae86a4ba4223c7d93d05ead4b1397c23'
+      FestivalsLab.signature(@api.secret_token, '/events?key=123').must_equal '742969faae86a4ba4223c7d93d05ead4b1397c23'
     end
   end
 
