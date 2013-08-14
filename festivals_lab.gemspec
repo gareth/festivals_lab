@@ -16,4 +16,6 @@ Gem::Specification.new do |gem|
   gem.version       = FestivalsLab::VERSION
 
   gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'webmock'
+  gem.add_development_dependency 'minitest-reporters'
 end
