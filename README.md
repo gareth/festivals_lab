@@ -4,9 +4,11 @@ An unofficial library to access festival data from the Edinburgh Festivals Innov
 
 ## Description ##
 
-Festivals Lab is an open data initiative which provides free access to the events of the 12 annual Edinburgh festivals.
+[Festivals Lab][festivalslab] is an open data initiative which provides free access to the events of the 12 annual Edinburgh festivals.
 
 The `festivals_lab` gem wraps the API and ties it with a Ruby bow
+
+  [festivalslab]: http://festivalslab.com/
 
 ## Compatibility ##
 
@@ -38,7 +40,7 @@ The parameters for library method calls match the [official documentation][query
 * The library exclusively requests JSON responses from the API, and the `pretty` parameter is invalid.
 
   [gettingstarted]: http://api.festivalslab.com/documentation#gettingstarted
-  [querying]: http://api.festivalslab.com/documentation#Querying the API
+  [querying]: http://api.festivalslab.com/documentation#Querying%20the%20API
 
 ### Sample usage ###
 

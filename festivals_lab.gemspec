@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["g@rethada.ms"]
   gem.description   = %q{Accesses festival data from the Edinburgh Festivals Innovation Lab API}
   gem.summary       = %q{The Edinburgh Festivals API is an ambitious project which aims to create open access to the event listings data of Edinburgh’s 12 major Festivals}
-  gem.homepage      = "http://festivalslab.com/"
+  gem.homepage      = "https://github.com/gareth/festivals_lab"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
