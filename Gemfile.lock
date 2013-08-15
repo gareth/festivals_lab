@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    festivals_lab (0.0.2)
+    festivals_lab (0.0.3)
 
 GEM
   remote: http://rubygems.org/
