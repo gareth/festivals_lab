@@ -14,6 +14,11 @@ class FestivalsLab
     @secret_token = secret_token
   end
 
+  # Searches the API for events matching the given `params`
+  #
+  # See the API documentation at
+  # http://api.festivalslab.com/documentation#Querying%20the%20API for valid
+  # parameters
   def events params = {}
     params = params.dup
 
@@ -39,11 +44,18 @@ class FestivalsLab
     FestivalsLab.request access_key, secret_token, '/events', params
   end
 
+  # Returns the known data for an event based on the event's UUID
+  #
+  # The only way to obtain the UUID for an event is to extract it from the
+  # `url` property returned by the `events` endpoint
   def event uuid
     FestivalsLab.request access_key, secret_token, "/event/#{uuid}"
   end
 
   class << self
+    # Makes a signed API request to the given endpoint
+    #
+    # Requests the data in JSON format and parses the response as JSON
     def request access_key, secret_token, endpoint, params = {}
       uri = FestivalsLab.signed_uri access_key, secret_token, endpoint, params
       Net::HTTP.start(uri.host, uri.port) do |http|
@@ -58,6 +70,8 @@ class FestivalsLab
       end
     end
 
+    # Returns a URI containing the correct signature for the given endpoint and
+    # query string parameters
     def signed_uri access_key, secret_token, endpoint, params = {}
       params = params.dup
       raise Error, "Missing API access key" unless access_key
@@ -78,11 +92,11 @@ class FestivalsLab
       URI.parse(uri.to_s)
     end
 
+    # Returns the correct API signature for the given URL and secret token
     def signature secret_token, url
       OpenSSL::HMAC.hexdigest 'sha1', secret_token, url
     end
   end
-
 
   Error = Class.new(StandardError)
   ArgumentError = Class.new(::ArgumentError)
