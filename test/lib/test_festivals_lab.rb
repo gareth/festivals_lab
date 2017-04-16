@@ -69,7 +69,7 @@ describe FestivalsLab do
     end
 
     it "returns parsed events" do
-      stub = stub_http_request(:get, %r{//api\.festivalslab\.com/events})
+      stub_http_request(:get, %r{//api\.festivalslab\.com/events})
         .to_return(@successful_response)
 
       response = @api.events
@@ -89,13 +89,13 @@ describe FestivalsLab do
       stub = stub_http_request(:get, %r{//api\.festivalslab\.com/event/00000000000000000000000000000000deadbeef})
         .to_return(@successful_response)
 
-      response = @api.event '00000000000000000000000000000000deadbeef'
+      @api.event '00000000000000000000000000000000deadbeef'
 
       assert_requested(stub)
     end
 
     it "returns the parsed event" do
-      stub = stub_http_request(:get, %r{//api\.festivalslab\.com/event/00000000000000000000000000000000deadbeef})
+      stub_http_request(:get, %r{//api\.festivalslab\.com/event/00000000000000000000000000000000deadbeef})
         .to_return(@successful_response)
 
       response = @api.event '00000000000000000000000000000000deadbeef'
@@ -118,7 +118,7 @@ describe FestivalsLab do
     end
 
     it "parses the response as JSON" do
-      stub = stub_http_request(:get, @uri)
+      stub_http_request(:get, @uri)
         .to_return(@successful_response)
 
       response = FestivalsLab.request @api.access_key, @api.secret_token, '/events'
@@ -127,7 +127,7 @@ describe FestivalsLab do
     end
 
     it "raises FestivalsLab::ApiError on unsuccessful HTTP request" do
-      stub = stub_http_request(:get, @uri)
+      stub_http_request(:get, @uri)
         .to_return(@failed_response)
 
       lambda { FestivalsLab.request @api.access_key, @api.secret_token, '/events' }.must_raise(FestivalsLab::ApiError)
