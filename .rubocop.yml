@@ -1,0 +1,49 @@
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+
+# Relates to the indentation of if/when/(etc.) blocks when the initial keyword
+# is indented as part of a variable assignment.
+#
+# Our preference is that the rubocop default conflicts with our 80-character
+# line restriction, leaving less space for code inside nested blocks. We make
+# this change at the cost of a little bit of readability.
+#
+#     # bad (although the Rubocop default):
+#     thing = if x > 42
+#               thing!
+#             else
+#               other_thing!
+#             end
+#
+#     # good (preferred):
+#     thing = if x > 42
+#       thing!
+#     else
+#       other_thing!
+#     end
+#
+#     # also acceptable
+#     thing =
+#       if x > 42
+#         thing!
+#       else
+#         other_thing!
+#       end
+Lint/EndAlignment:
+  EnforcedStyleAlignWith: variable
+
+# Passing multiple hashes to a function is messy, and clarity is good
+# This is an extension of https://github.com/bbatsov/ruby-style-guide#no-braces-opts-hash
+Style/BracesAroundHashParameters:
+  EnforcedStyle: context_dependent
+  StyleGuide: https://github.com/bbatsov/rubocop/issues/801
+
+# This is one part of the style guide that doesn't express a preference, it just
+# suggests you make a choice
+Style/DotPosition:
+  EnforcedStyle: trailing
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+  StyleGuide: https://www.viget.com/articles/just-use-double-quoted-ruby-strings
