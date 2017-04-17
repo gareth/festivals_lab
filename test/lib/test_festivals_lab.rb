@@ -33,7 +33,7 @@ describe FestivalsLab do
   describe "#events" do
     %i[festival genre country code year title description artist venue_name post_code distance].each do |param|
       it "allows a string '#{param}' parameter" do
-        stub = stub_http_request(:get, %r{//api\.festivalslab\.com/events}).
+        stub = stub_http_request(:get, %r{//api\.edinburghfestivalcity\.com/events}).
                with(query: hash_including(param => "value")).
                to_return(@successful_response)
 
@@ -45,7 +45,7 @@ describe FestivalsLab do
 
     %i[venue_code price_from price_to size from lat lng].each do |param|
       it "allows a numeric '#{param}' parameter" do
-        stub = stub_http_request(:get, %r{//api\.festivalslab\.com/events}).
+        stub = stub_http_request(:get, %r{//api\.edinburghfestivalcity\.com/events}).
                with(query: hash_including(param => "42")).
                to_return(@successful_response)
 
@@ -57,7 +57,7 @@ describe FestivalsLab do
 
     %i[date_from date_to modified_from].each do |param|
       it "allows a date '#{param}' parameter" do
-        stub = stub_http_request(:get, %r{//api\.festivalslab\.com/events}).
+        stub = stub_http_request(:get, %r{//api\.edinburghfestivalcity\.com/events}).
                with(query: hash_including(param => "1970-01-01 01:00:00")).
                to_return(@successful_response)
 
@@ -68,7 +68,7 @@ describe FestivalsLab do
     end
 
     it "returns parsed events" do
-      stub_http_request(:get, %r{//api\.festivalslab\.com/events}).
+      stub_http_request(:get, %r{//api\.edinburghfestivalcity\.com/events}).
         to_return(@successful_response)
 
       response = @api.events
@@ -85,7 +85,7 @@ describe FestivalsLab do
 
   describe "#event" do
     it "requests the event from the API" do
-      stub = stub_http_request(:get, %r{//api\.festivalslab\.com/event/00000000000000000000000000000000deadbeef}).
+      stub = stub_http_request(:get, %r{//api\.edinburghfestivalcity\.com/event/00000000000000000000000000000000deadbeef}).
              to_return(@successful_response)
 
       @api.event "00000000000000000000000000000000deadbeef"
@@ -94,7 +94,7 @@ describe FestivalsLab do
     end
 
     it "returns the parsed event" do
-      stub_http_request(:get, %r{//api\.festivalslab\.com/event/00000000000000000000000000000000deadbeef}).
+      stub_http_request(:get, %r{//api\.edinburghfestivalcity\.com/event/00000000000000000000000000000000deadbeef}).
         to_return(@successful_response)
 
       response = @api.event "00000000000000000000000000000000deadbeef"
@@ -105,7 +105,7 @@ describe FestivalsLab do
 
   describe "request" do
     before do
-      @uri = "http://api.festivalslab.com/events?key=123&signature=742969faae86a4ba4223c7d93d05ead4b1397c23"
+      @uri = "http://api.edinburghfestivalcity.com/events?key=123&signature=742969faae86a4ba4223c7d93d05ead4b1397c23"
     end
 
     it "makes a request to the signed endpoint URI" do
@@ -147,7 +147,7 @@ describe FestivalsLab do
     it "appends the correct signature to the request URI" do
       uri = FestivalsLab.signed_uri(@api.access_key, @api.secret_token, "/events", key: 123)
       uri.must_be_kind_of(URI)
-      uri.to_s.must_equal "http://api.festivalslab.com/events?key=123&signature=742969faae86a4ba4223c7d93d05ead4b1397c23"
+      uri.to_s.must_equal "http://api.edinburghfestivalcity.com/events?key=123&signature=742969faae86a4ba4223c7d93d05ead4b1397c23"
     end
   end
 

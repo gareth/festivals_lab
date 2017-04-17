@@ -6,7 +6,7 @@ class FestivalsLab
   attr_accessor :access_key, :secret_token
 
   SCHEME = "http".freeze
-  HOST = "api.festivalslab.com".freeze
+  HOST = "api.edinburghfestivalcity.com".freeze
 
   def initialize(access_key, secret_token)
     @access_key   = access_key
